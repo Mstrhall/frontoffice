@@ -82,7 +82,7 @@ class MyHomePage extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
+                  backgroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                 ),
                 child: Text(

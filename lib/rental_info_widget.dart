@@ -76,7 +76,7 @@ class _RentalSearchPageState extends State<RentalSearchPage> {
               onPressed: _searchRentals,
               child: Text('Rechercher'),
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFFB44D11),
+                backgroundColor: Color(0xFFB44D11),
               ),
             ),
           ],
