@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
     final String password = _passwordController.text;
 
     final response = await http.post(
-      Uri.parse('http://localhost:8000/api/users/auth'),
+      Uri.parse('http://127.0.0.1:8000/api/users/auth'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
