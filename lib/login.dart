@@ -72,10 +72,19 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            // Forme irrégulière ocre
             Positioned(
               top: 0,
               left: -100,
@@ -161,6 +170,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
 }
 
 class CloudShapePainter extends CustomPainter {
