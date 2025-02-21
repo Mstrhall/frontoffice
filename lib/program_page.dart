@@ -26,22 +26,22 @@ class _ProgramPageState extends State<ProgramPage> {
     int programId;
     switch (widget.themeIndex) {
       case 1:
-        programId = 62;
+        programId = 8;
         break;
       case 2:
-        programId = 63;
+        programId = 9;
         break;
       case 3:
-        programId = 64;
+        programId = 10;
         break;
       case 4:
-        programId = 68;
+        programId = 5;
         break;
       case 5:
-        programId = 70;
+        programId = 6;
         break;
       case 6:
-        programId = 82;
+        programId = 7;
         break;
       default:
         throw Exception('Invalid theme index');
