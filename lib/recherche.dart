@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -80,6 +82,30 @@ class _RecherchePageState extends State<RecherchePage> {
     if (response.statusCode == 200) {
       setState(() {
         rentalResults = List<dynamic>.from(jsonDecode(response.body));
+
+        for (var result in rentalResults) {
+          String dateStart = result['dateStart'];
+          String dateEnd = result['dateEnd'];
+
+          // Convertir les dates au format DateTime
+          DateTime startDate = DateTime.parse(dateStart);
+          DateTime endDate = DateTime.parse(dateEnd);
+
+          // Formater les dates au format 'yyyy-MM-dd'
+          String formattedStartDate = '${startDate.year.toString().padLeft(4, '0')}-'
+              '${startDate.month.toString().padLeft(2, '0')}-'
+              '${startDate.day.toString().padLeft(2, '0')}';
+
+          String formattedEndDate = '${endDate.year.toString().padLeft(4, '0')}-'
+              '${endDate.month.toString().padLeft(2, '0')}-'
+              '${endDate.day.toString().padLeft(2, '0')}';
+
+          // Mettre à jour les valeurs dans le JSON
+          result['dateStart'] = formattedStartDate;
+          result['dateEnd'] = formattedEndDate;
+        }
+
+
       });
     } else {
       setState(() {
