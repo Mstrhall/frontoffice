@@ -26,7 +26,7 @@ class _ProgramPageState extends State<ProgramPage> {
     int programId;
     switch (widget.themeIndex) {
       case 1:
-        programId = 8;
+        programId =6 ;
         break;
       case 2:
         programId = 9;
@@ -41,7 +41,7 @@ class _ProgramPageState extends State<ProgramPage> {
         programId = 6;
         break;
       case 6:
-        programId = 7;
+        programId = 8;
         break;
       default:
         throw Exception('Invalid theme index');
@@ -178,7 +178,14 @@ class _ProgramPageState extends State<ProgramPage> {
                           children: [
                             Icon(Icons.center_focus_strong, color: Color(0xFFB44D11)),
                             SizedBox(width: 10),
-                            Text('${program['focus']}', style: TextStyle(fontSize: 18)),
+                            Expanded( // Permet au texte de prendre l'espace disponible et de passer à la ligne si nécessaire
+                              child: Text(
+                                '${program['focus']}',
+                                style: TextStyle(fontSize: 18),
+                                overflow: TextOverflow.visible, // Assure que le texte passe à la ligne
+                                softWrap: true, // Permet le retour à la ligne automatique
+                              ),
+                            ),
                           ],
                         ),
                         Text(
