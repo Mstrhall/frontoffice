@@ -25,46 +25,54 @@ class _LoginPageState extends State<LoginPage> {
     final String email = _emailController.text;
     final String password = _passwordController.text;
 
-    final response = await http.post(
-      Uri.parse('http://127.0.0.1:8000/api/users/auth'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'email': email,
-        'password': password,
-      }),
-    );
+    try {
+      final response = await http.post(
+        Uri.parse('http://127.0.0.1:8000/api/users/auth'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'email': email,
+          'password': password,
+        }),
+      );
 
-    setState(() {
-      _isLoading = false;
-    });
+      setState(() {
+        _isLoading = false;
+      });
 
-    if (response.statusCode == 200) {
-      // Connexion réussie
-      final responseData = json.decode(response.body);
+      if (response.statusCode == 200) {
+        // Connexion réussie
+        final responseData = json.decode(response.body);
 
-      if (responseData['id'] != null) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('email', email);
-        await prefs.setString('password', password);
-        await prefs.setBool('isLoggedIn', true);
-        await prefs.setInt('userId', responseData['id']); // Stocke l'ID de l'utilisateur
+        if (responseData['id'] != null) {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('email', email);
+          await prefs.setString('password', password);
+          await prefs.setBool('isLoggedIn', true);
+          await prefs.setInt(
+              'userId', responseData['id']); // Stocke l'ID de l'utilisateur
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => RecherchePage()),
-        );
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => RecherchePage()),
+          );
+        } else {
+          setState(() {
+            _errorMessage =
+            'ID utilisateur manquant dans la réponse du serveur.';
+          });
+        }
       } else {
+        // Connexion échouée
         setState(() {
-          _errorMessage = 'ID utilisateur manquant dans la réponse du serveur.';
+          _errorMessage = 'Email ou mot de passe incorrect';
         });
       }
-    } else {
-      // Connexion échouée
-      setState(() {
-        _errorMessage = 'Email ou mot de passe incorrect';
-      });
+    }
+    catch(e){
+      _isLoading = false;
+      _errorMessage = 'Une erreur est survenue';
     }
   }
 
@@ -160,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       padding: EdgeInsets.symmetric(vertical: 15.0),
                     ),
-                    child: Text('Connexion', style: TextStyle(fontSize: 18)),
+                    child: Text('Connexion', style: TextStyle(fontSize: 18, color: Colors.white)),
                   ),
                   SizedBox(height: 20),
                   Text(
